@@ -1,0 +1,1 @@
+new Worker('leader.js');
