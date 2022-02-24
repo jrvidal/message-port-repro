@@ -1,6 +1,11 @@
 const DESTROY = false;
 
-setTimeout(start, 200);
+let leaderPort;
+
+self.addEventListener('message', ({ ports }) => {
+  leaderPort = ports[0];
+  setTimeout(start, 200);
+})
 
 function start() {
   const { port1, port2 } = new MessageChannel();
@@ -15,5 +20,5 @@ function start() {
     port2.onmessage = null;
   }
 
-  self.postMessage(undefined, [port2]);
+  leaderPort.postMessage(undefined, [port2]);
 }

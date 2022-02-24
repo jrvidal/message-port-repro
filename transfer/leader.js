@@ -1,7 +1,13 @@
-const child = new Worker('follower.js');
+self.addEventListener('message', ({ ports }) => {
 
-child.onmessage = ({ ports }) => {
-  ports[0].onmessage = ({ data }) => {
-    console.log('[leader] port got', data);
+  const followerPort = ports[0];
+
+  followerPort.onmessage = ({ ports }) => {
+    ports[0].onmessage = ({ data }) => {
+      console.log('[leader] port got', data);
+    };
   };
-};
+
+});
+
+
